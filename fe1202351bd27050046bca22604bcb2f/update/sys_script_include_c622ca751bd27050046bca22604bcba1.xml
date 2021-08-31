@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <active>true</active>
+        <api_name>global.sherpa</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description>This is the namespace entrypoint for the Sherpa Utils library.&#13;
+&#13;
+NOTE: Functions should be implemented in nested namespaces, not at the top level!</description>
+        <name>sherpa</name>
+        <script><![CDATA[var sherpa = {
+    array: {
+        /**SNDOC
+        @name array.contains
+        @description
+        Checks if array contains exactly element (strict equality)
+        NOTE: this is a convenience rebinding of ArrayUtil.contains
+        
+        @param {Array<Any>} [array] - The list to be searched
+        @param {Any} [element] - The value to search for in array
+        @returns {boolean} True if element is contained in array
+        
+        @example
+        var exampleArray = ['hello', 'world', ':-)', 'wow!']
+        // containsSmiley will be true
+        var containsSmiley = sherpa.array.contains(exampleArray, ':-)');
+        */
+        contains: function(array, element) {
+            return ArrayUtil.prototype.contains(array, element);
+        },
+        /**SNDOC
+        @name array.find
+        @description
+        Gets the first element of array that satisfies predicateFn
+        NOTE: predicateFn has a different signature compared to ES6's Array.find
+        
+        @param {Array<Any>} [array] - The list to be searched
+        @param {function(Any):boolean} [predicateFn] - The function to check elements of array against
+        @returns {Any|null} The first element in array that satisfies predicateFn or null if no satisfying elements exist
+        
+        @example
+        var exampleArray = [1,2,3,4,5];
+        // firstEvenNumber will be 2
+        var firstEvenNumber = sherpa.array.find(
+            exampleArray,
+            function(arrayElement){
+                return arrayElement % 2 === 0;
+            }
+        );
+        */
+        find: function(array, predicateFn) {
+            return Stream.fromArray(ArrayUtil.prototype.convertArray(array))
+                .find(predicateFn)
+                .orElse(null);
+        },
+        /**SNDOC
+        @name array.unique
+        @description
+        Returns a copy of array with no duplicates
+        NOTE: this is a convenience rebinding of ArrayUtil.unique
+
+        @param {Array<Any>} [array] - The original list to get unique elements from
+        @returns {Array<Any>} A new list with only the unique elements of array
+
+        @example
+        var exampleArray = [1,2,2,3,4,4,4];
+        // uniqueArray will be [1,2,3,4]
+        var uniqueArray = sherpa.array.unique(exampleArray);
+        */
+        unique: function(array) {
+            return ArrayUtil.prototype.unique(
+                ArrayUtil.prototype.convertArray(array)
+            );
+        }
+    }
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>christopher.crockett@cloudgoservices.com</sys_created_by>
+        <sys_created_on>2021-08-31 15:52:52</sys_created_on>
+        <sys_id>c622ca751bd27050046bca22604bcba1</sys_id>
+        <sys_mod_count>31</sys_mod_count>
+        <sys_name>sherpa</sys_name>
+        <sys_package display_value="Sherpa Utils" source="fe1202351bd27050046bca22604bcb2f">fe1202351bd27050046bca22604bcb2f</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Sherpa Utils">fe1202351bd27050046bca22604bcb2f</sys_scope>
+        <sys_update_name>sys_script_include_c622ca751bd27050046bca22604bcba1</sys_update_name>
+        <sys_updated_by>christopher.crockett@cloudgoservices.com</sys_updated_by>
+        <sys_updated_on>2021-08-31 17:38:39</sys_updated_on>
+    </sys_script_include>
+</record_update>

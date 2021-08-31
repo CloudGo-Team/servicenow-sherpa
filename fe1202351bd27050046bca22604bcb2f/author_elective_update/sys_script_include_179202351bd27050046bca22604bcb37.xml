@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="DELETE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>global.sherpaArray</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description>This is the array namespace for the Sherpa library.&#13;
+&#13;
+NOTE: Do not access this namespace directly. Use the "sherpa.array.*" pattern instead.</description>
+        <name>sherpaArray</name>
+        <script><![CDATA[var sherpaArray = {
+	/**
+	* Returns true if an exact match (===) for element is found in array
+	*
+	* @param {Iterable} array - The array to search for element within
+	* @param {Any} element - The value to search for within array
+	* @return {Boolean}
+	*/
+	contains: function(array, element) {
+		return ArrayUtil.prototype.contains(array, element);
+	}
+};]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>christopher.crockett@cloudgoservices.com</sys_created_by>
+        <sys_created_on>2021-08-31 16:08:01</sys_created_on>
+        <sys_id>179202351bd27050046bca22604bcb37</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>sherpaArray</sys_name>
+        <sys_package display_value="Sherpa Utils" source="fe1202351bd27050046bca22604bcb2f">fe1202351bd27050046bca22604bcb2f</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Sherpa Utils">fe1202351bd27050046bca22604bcb2f</sys_scope>
+        <sys_update_name>sys_script_include_179202351bd27050046bca22604bcb37</sys_update_name>
+        <sys_updated_by>christopher.crockett@cloudgoservices.com</sys_updated_by>
+        <sys_updated_on>2021-08-31 16:10:03</sys_updated_on>
+    </sys_script_include>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="Sherpa Utils">fe1202351bd27050046bca22604bcb2f</application>
+        <file_path/>
+        <instance_id>b4da64bbdbbaec10b847ac44d49619dc</instance_id>
+        <instance_name>ven04371</instance_name>
+        <name>sys_script_include_179202351bd27050046bca22604bcb37</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sys_script_include"&gt;&lt;sys_script_include action="INSERT_OR_UPDATE"&gt;&lt;access&gt;package_private&lt;/access&gt;&lt;active&gt;true&lt;/active&gt;&lt;api_name&gt;global.sherpaArray&lt;/api_name&gt;&lt;caller_access/&gt;&lt;client_callable&gt;false&lt;/client_callable&gt;&lt;description&gt;This is the array namespace for the Sherpa library.&amp;#13;
+&amp;#13;
+NOTE: Do not access this namespace directly. Use the "sherpa.array.*" pattern instead.&lt;/description&gt;&lt;name&gt;sherpaArray&lt;/name&gt;&lt;script&gt;&lt;![CDATA[var sherpaArray = {
+	/**
+	* Returns true if an exact match (===) for element is found in array
+	*
+	* @param {Iterable} array - The array to search for element within
+	* @param {Any} element - The value to search for within array
+	* @return {Boolean}
+	*/
+	contains: function(array, element) {
+		return ArrayUtil.prototype.contains(array, element);
+	}
+};]]&gt;&lt;/script&gt;&lt;sys_class_name&gt;sys_script_include&lt;/sys_class_name&gt;&lt;sys_created_by&gt;christopher.crockett@cloudgoservices.com&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2021-08-31 16:08:01&lt;/sys_created_on&gt;&lt;sys_id&gt;179202351bd27050046bca22604bcb37&lt;/sys_id&gt;&lt;sys_mod_count&gt;1&lt;/sys_mod_count&gt;&lt;sys_name&gt;sherpaArray&lt;/sys_name&gt;&lt;sys_package display_value="Sherpa Utils" source="fe1202351bd27050046bca22604bcb2f"&gt;fe1202351bd27050046bca22604bcb2f&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Sherpa Utils"&gt;fe1202351bd27050046bca22604bcb2f&lt;/sys_scope&gt;&lt;sys_update_name&gt;sys_script_include_179202351bd27050046bca22604bcb37&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;christopher.crockett@cloudgoservices.com&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2021-08-31 16:10:03&lt;/sys_updated_on&gt;&lt;/sys_script_include&gt;&lt;/record_update&gt;</payload>
+        <payload_hash>-654823119</payload_hash>
+        <record_name>sherpaArray</record_name>
+        <reverted_from/>
+        <source>7d6c9ac61b553010046bca22604bcb47</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>christopher.crockett@cloudgoservices.com</sys_created_by>
+        <sys_created_on>2021-08-31 16:10:03</sys_created_on>
+        <sys_id>b57646391bd27050046bca22604bcb72</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>17b9cf985990000001</sys_recorded_at>
+        <sys_updated_by>christopher.crockett@cloudgoservices.com</sys_updated_by>
+        <sys_updated_on>2021-08-31 16:10:03</sys_updated_on>
+        <type>Script Include</type>
+        <update_guid>31764639add270501f62919d790ac372</update_guid>
+        <update_guid_history>31764639add270501f62919d790ac372:-654823119,8406c239add27050a50c6e11429e0dff:1606994491</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>christopher.crockett@cloudgoservices.com</sys_created_by>
+        <sys_created_on>2021-08-31 16:19:01</sys_created_on>
+        <sys_db_object display_value="" name="sys_script_include">sys_script_include</sys_db_object>
+        <sys_id>75b17640df4c4b14842a2f983af3db44</sys_id>
+        <sys_metadata>179202351bd27050046bca22604bcb37</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>sherpaArray</sys_name>
+        <sys_package display_value="Sherpa Utils" source="fe1202351bd27050046bca22604bcb2f">fe1202351bd27050046bca22604bcb2f</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="Sherpa Utils">fe1202351bd27050046bca22604bcb2f</sys_scope>
+        <sys_scope_delete display_value="">082312beff194d808087ba27b8837840</sys_scope_delete>
+        <sys_update_name>sys_script_include_179202351bd27050046bca22604bcb37</sys_update_name>
+        <sys_update_version display_value="sys_script_include_179202351bd27050046bca22604bcb37">b57646391bd27050046bca22604bcb72</sys_update_version>
+        <sys_updated_by>christopher.crockett@cloudgoservices.com</sys_updated_by>
+        <sys_updated_on>2021-08-31 16:19:01</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>
