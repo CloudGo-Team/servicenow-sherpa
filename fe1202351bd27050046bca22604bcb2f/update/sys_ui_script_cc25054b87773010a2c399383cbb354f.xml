@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_script">
+    <sys_ui_script action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <description/>
+        <global>true</global>
+        <name>sherpa</name>
+        <script><![CDATA[(function(window) {
+    // Do nothing if Sherpa is already loaded
+    if (window.sherpa) return;
+
+    var sherpa = {
+        client: {
+            request: {
+                /**SNDOC
+				@name client.request.ajax
+				@description
+				Invokes a client callable script include function and returns the result as a Promise.
+				The output format is the same as GlideAjax.getXMLAnswer -- see config parameters for getting the full response instead
+
+				@param {string} [scriptApiName] - The API name of the Script Include to invoke
+				@param {string} [functionName] - The name of the function from scriptApiName to invoke
+				@param {Object} [params={}] - Each entry in the object represents a function parameter (a "sysparm_" prefix is added by default)
+				@param {Object} [config={}] - Extra configuration for situations where the default behavior is undesirable
+				@param {boolean} [config.useParametersVerbatim=false] - true will use parameter names as-is, instead of adding "sysparm_" automatically
+				@param {boolean} [config.returnFullResponse=false] - true will change the return value to be the full XML response (like GlideAjax.getXML)
+				@param {number} [config.maxRetries=1] - The number of times to retry after the initial attempt fails before rejecting the returned Promise
+				@returns {Promise<Any>} Will contain the return result of the function. May reject with a SherpaAjaxError if something goes wrong
+
+				@example
+				// Common usage
+				var hasAccessPromise = sherpa.client.request.ajax(
+					'global.RecordAccessChecker',
+					'canWrite',
+					{
+						table: 'sys_ui_script',
+						sys_id: 'cc25054b87773010a2c399383cbb354f'
+					}
+				);
+				hasAccessPromise['catch'](console.error).then(function(result){
+					window.alert('Visibility: ' + result);
+				});
+				
+				// Usage with scripts that don't use "sysparm_" prefixes for parameters
+				// We're also increasing the retry count using the same config object
+				var encodedId = '__ENC__zfjd54468dids';
+				var idPromise = sherpa.client.request.ajax(
+					'global.ParseURL',
+					'parseURL',
+					{
+						table: 'sys_ui_script',
+						rowId: encodedId
+					},
+					{
+						useParametersVerbatim: true,
+						maxRetries: 3
+					}
+				)
+				idPromise.then(console.info, console.error);
+				*/
+                ajax: function(scriptApiName, functionName, params, config) {
+                    // Load configuration values
+					if (!params) params = {};
+                    if (!config) config = {};
+                    var useParametersVerbatim = Boolean(config.useParametersVerbatim);
+                    var returnFullResponse = Boolean(config.returnFullResponse);
+                    var maxRetries = 1 || config.maxRetries;
+
+                    // Set up script/function target
+                    var ga = new GlideAjax(scriptApiName);
+                    ga.addParam('sysparm_name', functionName);
+
+                    // Apply parameters
+                    var paramPrefix = useParametersVerbatim ? '' : 'sysparm_';
+                    for (var param in params) {
+                        var value = params[param];
+                        ga.addParam(paramPrefix + param, value);
+                    }
+
+                    // Do the deed, extract the Promise
+                    var retries = 0;
+                    var responseFn = returnFullResponse ? ga.getXML : ga.getXMLAnswer;
+
+                    function getResponsePromise() {
+                        var requestPromise = new Promise(function(resolve, reject) {
+                            ga.setErrorCallback(function(badRequest) {
+                                reject(new sherpa.client.errors.SherpaAjaxError(scriptApiName, functionName, ga));
+                            });
+                            if (returnFullResponse) {
+                                ga.getXML(resolve);
+                            } else {
+                                ga.getXMLAnswer(resolve);
+                            }
+                        });
+
+                        // If the promise is rejected, catch and retry until we hit maxRetries
+                        return requestPromise['catch'](function(err) {
+                            if (retries >= maxRetries) throw err;
+
+                            retries++;
+                            return getResponsePromise();
+                        });
+                    }
+
+                    return getResponsePromise();
+                }
+            },
+            errors: {
+                SherpaAjaxError: (function() {
+                    function SherpaAjaxError(scriptApiName, functionName, glideAjax) {
+                        var badRequest = glideAjax.requestObject;
+                        var message = badRequest.status + ': ' + badRequest.statusText + '\n' + badRequest.response;
+                        var file = scriptApiName + '.' + functionName;
+                        var instance = new Error(message, file);
+
+                        instance.name = 'SherpaAjaxError';
+                        instance.postString = glideAjax.postString;
+                        instance.httpRequest = glideAjax.requestObject;
+
+                        Object.setPrototypeOf(instance, Object.getPrototypeOf(this));
+                        if (Error.captureStackTrace) Error.captureStackTrace(instance, SherpaAjaxError);
+                        return instance;
+                    }
+
+                    SherpaAjaxError.prototype = Object.create(Error.prototype, {
+                        constructor: {
+                            value: Error,
+                            enumerable: false,
+                            writable: true,
+                            configurable: true
+                        }
+                    });
+
+                    if (Object.setPrototypeOf) {
+                        Object.setPrototypeOf(SherpaAjaxError, Error);
+                    } else {
+                        SherpaAjaxError.__proto__ = Error;
+                    }
+
+                    return SherpaAjaxError;
+                })()
+            }
+        }
+    };
+
+    window.sherpa = sherpa;
+})(window);]]></script>
+        <script_name/>
+        <sys_class_name>sys_ui_script</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2021-11-17 22:11:30</sys_created_on>
+        <sys_id>cc25054b87773010a2c399383cbb354f</sys_id>
+        <sys_mod_count>9</sys_mod_count>
+        <sys_name>sherpa</sys_name>
+        <sys_package display_value="Sherpa Utils" source="fe1202351bd27050046bca22604bcb2f">fe1202351bd27050046bca22604bcb2f</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Sherpa Utils">fe1202351bd27050046bca22604bcb2f</sys_scope>
+        <sys_update_name>sys_ui_script_cc25054b87773010a2c399383cbb354f</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2021-11-18 04:47:41</sys_updated_on>
+        <ui_type>0</ui_type>
+        <use_scoped_format>false</use_scoped_format>
+    </sys_ui_script>
+</record_update>
