@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="u_sndoc_tags">
+    <u_sndoc_tags action="INSERT_OR_UPDATE">
+        <sys_class_name>u_sndoc_tags</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2021-11-18 07:34:26</sys_created_on>
+        <sys_id>43858b4387f37010a2c399383cbb35b4</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>client</sys_name>
+        <sys_package display_value="Sherpa Utils" source="fe1202351bd27050046bca22604bcb2f">fe1202351bd27050046bca22604bcb2f</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Sherpa Utils">fe1202351bd27050046bca22604bcb2f</sys_scope>
+        <sys_update_name>u_sndoc_tags_43858b4387f37010a2c399383cbb35b4</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2021-11-18 07:57:24</sys_updated_on>
+        <u_aliases/>
+        <u_help_text><![CDATA[<p><span style="text-decoration: underline;">Description</span></p>
+<p>Used to provide information about where the function is available.</p>
+<p><span style="text-decoration: underline;">Required Values<br /></span></p>
+<ul style="list-style-position: inside;"><li>Availability<br />
+<ul style="list-style-position: inside;"><li><em>only</em>: the script is client-side only</li><li><em>hybrid</em>: a version of the script is available locally for both server-side and client-side</li><li><em>passthrough</em>: the script is available server-side and invokable via Ajax on the client-side</li><li><em>unsupported</em>: the script is server-side only</li></ul>
+</li></ul>
+<p><span style="text-decoration: underline;">Pattern</span></p>
+<p>&#64;client <strong>Availability</strong></p>
+<p><span style="text-decoration: underline;">Example</span></p>
+<pre>/**SNDOC<br />&#64;name sayHello<br /><strong>&#64;client only</strong><br />*/<br />sayHello: function () {<br />    return &#39;Hello John Doe&#39;;<br />}</pre>
+<p> </p>]]></u_help_text>
+        <u_parsing_script><![CDATA[(function parseTag(raw_tag){
+	if (raw_tag === 'only') return 'Client-Side Only';
+	if (raw_tag === 'hybrid') return 'Server-Side & Client-Side';
+	if (raw_tag === 'passthrough') return 'Server-Side w/ Ajax Passthrough';
+	if (raw_tag === 'unsupported') return 'Server-Side Only';
+})(raw_tag);]]></u_parsing_script>
+        <u_tag>client</u_tag>
+        <u_usage>once</u_usage>
+    </u_sndoc_tags>
+</record_update>

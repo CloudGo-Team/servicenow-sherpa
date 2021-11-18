@@ -2,7 +2,7 @@
     <sys_ui_script action="INSERT_OR_UPDATE">
         <active>true</active>
         <description/>
-        <global>true</global>
+        <global>false</global>
         <name>sherpa</name>
         <script><![CDATA[(function(window) {
     // Do nothing if Sherpa is already loaded
@@ -13,6 +13,7 @@
             request: {
                 /**SNDOC
 				@name client.request.ajax
+				@client only
 				@description
 				Invokes a client callable script include function and returns the result as a Promise.
 				The output format is the same as GlideAjax.getXMLAnswer -- see config parameters for getting the full response instead
@@ -59,7 +60,7 @@
 				*/
                 ajax: function(scriptApiName, functionName, params, config) {
                     // Load configuration values
-					if (!params) params = {};
+                    if (!params) params = {};
                     if (!config) config = {};
                     var useParametersVerbatim = Boolean(config.useParametersVerbatim);
                     var returnFullResponse = Boolean(config.returnFullResponse);
@@ -142,21 +143,41 @@
         }
     };
 
-    window.sherpa = sherpa;
+    function recursiveProxy(target, pathway) {
+		var dummyFn = function(){};
+		dummyFn.isDummy = true;
+        return new Proxy(target, {
+            get: function(me, prop) {
+                if (typeof me[prop] !== 'undefined') return recursiveProxy(me[prop]);
+                if (!pathway) return recursiveProxy(dummyFn, prop);
+                return recursiveProxy(dummyFn, pathway + '.' + prop);
+            },
+            apply: function(me, thisArg, argumentsList) {
+				if (!me.isDummy) return me.apply(thisArg, argumentsList);
+                return sherpa.client.request.ajax('SherpaAjax', pathway, {
+                    value: JSON.stringify(argumentsList)
+                }).then(JSON.parse);
+            }
+        });
+    }
+	
+	var sherpaProxy = recursiveProxy(sherpa);
+
+    window.sherpa = sherpaProxy;
 })(window);]]></script>
         <script_name/>
         <sys_class_name>sys_ui_script</sys_class_name>
         <sys_created_by>admin</sys_created_by>
         <sys_created_on>2021-11-17 22:11:30</sys_created_on>
         <sys_id>cc25054b87773010a2c399383cbb354f</sys_id>
-        <sys_mod_count>9</sys_mod_count>
+        <sys_mod_count>23</sys_mod_count>
         <sys_name>sherpa</sys_name>
         <sys_package display_value="Sherpa Utils" source="fe1202351bd27050046bca22604bcb2f">fe1202351bd27050046bca22604bcb2f</sys_package>
         <sys_policy/>
         <sys_scope display_value="Sherpa Utils">fe1202351bd27050046bca22604bcb2f</sys_scope>
         <sys_update_name>sys_ui_script_cc25054b87773010a2c399383cbb354f</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2021-11-18 04:47:41</sys_updated_on>
+        <sys_updated_on>2021-11-18 07:38:24</sys_updated_on>
         <ui_type>0</ui_type>
         <use_scoped_format>false</use_scoped_format>
     </sys_ui_script>
